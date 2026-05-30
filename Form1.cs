@@ -24,7 +24,13 @@ namespace Poligon2026DUB_b
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Graphics g = panel1.CreateGraphics();
+            Tacka t = new Tacka(1, 2);
+            Crtaj(g,t);
+        }
+        public void Crtaj(Graphics dr, Tacka t) 
+        {
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,6 +44,11 @@ namespace Poligon2026DUB_b
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
