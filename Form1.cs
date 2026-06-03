@@ -16,31 +16,54 @@ namespace Poligon2026DUB_b
         public Form1()
         {
             InitializeComponent();
+            this.Width = 800;
+            this.Height = 500;
 
-            
+            // Subscribe to the panel Paint event so drawings persist across repaints
             panel1.Paint += Panel1_Paint;
-        }
 
+            this.Resize += Form1_Resize;
+            // initial layout
+            LayoutPanel();
+        }
+        private void LayoutPanel()
+        {
+            // keep 10px margin on left/right and 30px top margin for example
+            int left = this.Width / 2;
+            int top = 30;
+            int right = 10;
+            int bottom = 10;
+
+            panel1.Location = new Point(left, top);
+            panel1.Size = new Size(
+                this.ClientSize.Width - left - right,
+                this.ClientSize.Height - top - bottom);
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-
+            // Example: add a point when button clicked (optional)
             AddPoint(new Tacka(100, 100));
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            // Add initial point and request repaint
             Tacka prva = new Tacka(1, 1);
+            Tacka druga = new Tacka(1, 5);
+            Tacka treca = new Tacka(3, 3);
             AddPoint(prva);
+            AddPoint(druga);
+            AddPoint(treca);
         }
 
-
+        // Adds a point to the list and invalidates the panel to trigger repaint
         public void AddPoint(Tacka t)
         {
             _points.Add(t);
             panel1.Invalidate();
         }
 
+        // Paint event draws all stored points
         private void Panel1_Paint(object sender, PaintEventArgs e)
         {
             foreach (var t in _points)
@@ -49,16 +72,34 @@ namespace Poligon2026DUB_b
             }
         }
 
+        // Draw a single point on the provided Graphics. Coordinates are translated
+        // so (0,0) is bottom-left of the panel (y inverted).
         public void Crtaj(Graphics dr, Tacka t)
         {
             int panelHeight = panel1.ClientSize.Height;
-            int x = (int)(t.x - 2);
-            int y = panelHeight - (int)t.y - 2;
+            int panelWidth = panel1.ClientSize.Width;
+            // ose
+            int pocetak = panelWidth / 10;
+            int kraj = panelWidth - pocetak;
+            int visina = panelHeight - panelHeight / 10;
+
+            Pen linija = new Pen(Color.Black, 2);
+            dr.DrawLine(linija, pocetak, visina, kraj, visina);
+
+
+
+            int x = panelWidth / 2 + (int)t.x * 20; // Shift x to center
+            int y = panelHeight / 2 - (int)t.y * 30; // Invert y and shift to center
 
             using (var cetka = new SolidBrush(Color.Red))
             {
                 dr.FillEllipse(cetka, x, y, 8, 8);
             }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+
         }
     }
 }
