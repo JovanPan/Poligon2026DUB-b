@@ -101,5 +101,25 @@ namespace Poligon2026DUB_b
         {
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double x = Convert.ToDouble(textBox1.Text);
+            double y = Convert.ToDouble(textBox2.Text);
+            Tacka nova = new Tacka(x, y);
+            _points.Add(nova);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            int duzina = _points.Count;
+            poligon radi = new poligon(duzina);
+            
+        }
     }
 }
