@@ -16,6 +16,15 @@ namespace Poligon2026DUB_b
             br_temena = n;
             teme = new Tacka[n];
         }
+        public poligon(int n, Tacka[] tacke)
+        {
+            this.br_temena = n;
+            teme = new Tacka[n];
+            for (int i = 0; i < n; i++)
+            {
+                teme[i] = tacke[i];
+            }
+        }
         public static poligon unos()
         {
             Console.WriteLine("Unesite broj temena=");

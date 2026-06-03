@@ -13,6 +13,7 @@ namespace Poligon2026DUB_b
     public partial class Form1 : Form
     {
         private readonly List<Tacka> _points = new List<Tacka>();
+        poligon radni;
         public Form1()
         {
             InitializeComponent();
@@ -41,19 +42,12 @@ namespace Poligon2026DUB_b
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            // Example: add a point when button clicked (optional)
-            AddPoint(new Tacka(100, 100));
+            radni = poligon.ucitaj();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Add initial point and request repaint
-            Tacka prva = new Tacka(1, 1);
-            Tacka druga = new Tacka(1, 5);
-            Tacka treca = new Tacka(3, 3);
-            AddPoint(prva);
-            AddPoint(druga);
-            AddPoint(treca);
+
         }
 
         // Adds a point to the list and invalidates the panel to trigger repaint
@@ -102,24 +96,51 @@ namespace Poligon2026DUB_b
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
             double x = Convert.ToDouble(textBox1.Text);
             double y = Convert.ToDouble(textBox2.Text);
             Tacka nova = new Tacka(x, y);
             _points.Add(nova);
+            string tacka = "x=" + x.ToString() + " y=" + y.ToString();
+            listBox1.Items.Add(tacka);
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e)
         {
             int duzina = _points.Count;
-            poligon radi = new poligon(duzina);
-            
+            Tacka[] temena;
+            temena = new Tacka[duzina];
+            for (int i = 0; i < duzina; i++)
+            {
+                temena[i] = _points[i];
+            }
+            radni = new poligon(duzina, temena);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            bool prost = radni.prost();
+            if (prost) label1.Text = "Prost";
+            else label1.Text = "Nije prost";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            radni.snimi();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            bool konv = radni.konveksan();
+            if (konv) label2.Text = "Konveksan";
+            else label2.Text = "Konkavan";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            double povrs = radni.povrsina();
+            label5.Text = povrs.ToString();
         }
     }
 }
